@@ -1,14 +1,12 @@
-//
-// Created by roland on 26.05.2023.
-//
+/*
+ * SPDX-FileCopyrightText: 2024 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
-#include <stdio.h>
-#include <stdarg.h>
-#include <stdint-gcc.h>
-#include <malloc.h>
 #include "Stm32ItmLogger.h"
+#include "main.h"
 
-extern void ITM_SendChar(uint32_t ch);
+//extern uint32_t ITM_SendChar (uint32_t ch);
 
 // Konstruktor
 Debugger *Debugger_create(uint8_t chan) {
@@ -17,12 +15,11 @@ Debugger *Debugger_create(uint8_t chan) {
     return debugger;
 }
 
-char MSG[1024];
+char MSG[STM32_ITM_LOGGER_BUFFER_SIZE];
 
 void Debugger_log(Debugger *debugger, const char *format, ...) {
     va_list args;
     va_start(args, format);
-
 
 //    time_t now = time(NULL);
 //    struct tm* timeinfo = localtime(&now);
@@ -32,7 +29,7 @@ void Debugger_log(Debugger *debugger, const char *format, ...) {
 //    snprintf(MSG, sizeof(MSG), "[%s] ", timestamp);
 //    SWO_PrintString(MSG, debugger->chan);
 
-    vsnprintf(MSG, sizeof(MSG), format, args);
+    vsnprintf(MSG, STM32_ITM_LOGGER_BUFFER_SIZE, format, args);
     SWO_PrintString(MSG, debugger->chan);
 
     SWO_PrintChar('\n', debugger->chan);
@@ -57,7 +54,7 @@ void Debugger_log(Debugger *debugger, const char *format, ...) {
  */
 void SWO_PrintChar(char c, uint8_t chan) {
 
-#if(1)
+#if(1==1)
     //Use CMSIS_core_DebugFunctions. See core_cm3.h
     ITM_SendChar(c);
 

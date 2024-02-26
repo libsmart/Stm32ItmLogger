@@ -1,9 +1,16 @@
-//
-// Created by roland on 26.05.2023.
-//
+/*
+ * SPDX-FileCopyrightText: 2024 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
 
-#ifndef STM32_W5500_DEBUGGER_H
-#define STM32_W5500_DEBUGGER_H
+#ifndef STM32_ITM_LOGGER_H
+#define STM32_ITM_LOGGER_H
+
+#include "config.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <stdint-gcc.h>
+#include <malloc.h>
 
 typedef struct {
     uint8_t chan;
@@ -15,4 +22,4 @@ void SWO_PrintChar(char c, uint8_t chan);
 void SWO_PrintString(const char *s, uint8_t chan);
 
 
-#endif //STM32_W5500_DEBUGGER_H
+#endif //STM32_ITM_LOGGER_H
