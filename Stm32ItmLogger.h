@@ -12,6 +12,11 @@
 #include <stdint-gcc.h>
 #include <malloc.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 typedef struct {
     uint8_t chan;
 } Debugger;
@@ -21,5 +26,8 @@ void Debugger_log(Debugger* debugger, const char* format, ...);
 void SWO_PrintChar(char c, uint8_t chan);
 void SWO_PrintString(const char *s, uint8_t chan);
 
+#ifdef __cplusplus
+}
+#endif
 
 #endif //STM32_ITM_LOGGER_H
