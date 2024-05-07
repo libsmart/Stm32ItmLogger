@@ -3,4 +3,4 @@ project(Stm32ItmLogger C)
 
 set(CMAKE_C_STANDARD 11)
 
-add_library(Stm32ItmLogger STATIC Stm32ItmLogger.c)
+add_library(Stm32ItmLogger STATIC src/Stm32ItmLogger.c)

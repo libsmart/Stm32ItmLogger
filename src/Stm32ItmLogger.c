@@ -4,9 +4,9 @@
  */
 
 #include "Stm32ItmLogger.h"
-#include "main.h"
+//#include "main.h"
 
-//extern uint32_t ITM_SendChar (uint32_t ch);
+extern uint32_t ITM_SendChar (uint32_t ch);
 
 // Konstruktor
 Debugger *Debugger_create(uint8_t chan) {
