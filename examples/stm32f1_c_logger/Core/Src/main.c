@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "Stm32ItmLogger.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -43,6 +43,10 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
+
+// Dynamic Debugger struct creation (use Debugger_create() constructor)
+static Debugger* DBG_dynamic=NULL;
+static Debugger DBG_static={.chan=0};
 
 /* USER CODE END PV */
 
@@ -65,6 +69,9 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+
+  // Create DBG_dynamic instance
+  DBG_dynamic=Debugger_create(0);
 
   /* USER CODE END 1 */
 
@@ -92,11 +99,20 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  uint32_t counter = 0;
   while (1)
   {
+    Debugger_log(DBG_dynamic, "counter (dynamic) = %lu (0x%04x)", counter, counter);
+    Debugger_log(&DBG_static, "counter (static) = %lu (0x%04x)", counter, counter);
+    counter++;
+    HAL_GPIO_WritePin(LED1_GRN_GPIO_Port, LED1_GRN_Pin, counter & 2 ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED2_ORG_GPIO_Port, LED2_ORG_Pin, counter & 4 ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED3_RED_GPIO_Port, LED3_RED_Pin, counter & 8 ? GPIO_PIN_RESET : GPIO_PIN_SET);
+    HAL_GPIO_WritePin(LED4_BLU_GPIO_Port, LED4_BLU_Pin, counter & 1 ? GPIO_PIN_RESET : GPIO_PIN_SET);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    HAL_Delay(500);
   }
   /* USER CODE END 3 */
 }
