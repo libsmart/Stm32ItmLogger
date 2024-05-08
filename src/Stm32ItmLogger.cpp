@@ -3,7 +3,4 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "../../../src/libsmart_config.dist.hpp"
-#include "../Lib/Stm32Common/src/libsmart_config.dist.hpp"
-
-//#undef LIBSMART_ENABLE_PRINTF
+#include "Stm32ItmLogger.hpp"

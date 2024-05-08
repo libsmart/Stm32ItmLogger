@@ -33,7 +33,10 @@ void loop() {
     dummyCpp++;
     dummyCandCpp++;
 
+    logger.print("counter = ");
+    logger.println(dummyCpp);
 
+    logger.printf("counter = %lu (0x%04x)\r\n", dummyCpp, dummyCpp);
 
     HAL_GPIO_WritePin(LED1_GRN_GPIO_Port, LED1_GRN_Pin, dummyCpp & 2 ? GPIO_PIN_RESET : GPIO_PIN_SET);
     HAL_GPIO_WritePin(LED2_ORG_GPIO_Port, LED2_ORG_Pin, dummyCpp & 4 ? GPIO_PIN_RESET : GPIO_PIN_SET);

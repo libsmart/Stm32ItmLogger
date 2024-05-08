@@ -1,0 +1,77 @@
+/*
+ * SPDX-FileCopyrightText: 2024 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
+ * SPDX-License-Identifier: BSD-3-Clause
+ */
+
+#ifndef LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP
+#define LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP
+
+#include <libsmart_config.hpp>
+#include <main.h>
+#include "Print.hpp"
+#include "StringBuffer.hpp"
+
+namespace Stm32ItmLogger {
+    class Stm32ItmLogger : public Stm32Common::Print {
+    public:
+        Stm32ItmLogger() = default;
+
+        explicit Stm32ItmLogger(uint8_t chan) : chan(chan) {}
+
+        size_t write(uint8_t data) override {
+            ITM_SendChar(data);
+            return 1;
+        }
+
+        int availableForWrite() override {
+            return 0;
+        }
+
+        void flush() override {
+        }
+
+
+        /**
+         * @brief Retrieves the write buffer and the remaining space in the buffer.
+         *
+         * This function retrieves the write buffer and the remaining space in the buffer.
+         * The write buffer is set to the `buffer` parameter and the remaining space is returned.
+         * It is the responsibility of the caller to use the write buffer and update the `buffer` pointer
+         * accordingly.
+         *
+         * @param[out] buffer The write buffer pointer.
+         * @return The remaining space in the buffer.
+         */
+        size_t getWriteBuffer(uint8_t *&buffer) override {
+            buffer = stringBuffer.getWritePointer();
+            return stringBuffer.getRemainingSpace();
+        }
+
+
+        /**
+         * @brief Sets the number of bytes written to the logger.
+         *
+         * This function sets the number of bytes written to the logger.
+         * It updates the internal stringBuffer by adding the given size.
+         * If there are any remaining bytes in the stringBuffer, it writes
+         * them to the logger using the write() function.
+         *
+         * @param size The number of bytes to set as written.
+         * @return The number of bytes added to the stringBuffer.
+         */
+        size_t setWrittenBytes(size_t size) override {
+            auto added = stringBuffer.add(size);
+            int ch;
+            while ((ch = stringBuffer.read()) >= 0) {
+                write((uint8_t)ch);
+            }
+            return added;
+        }
+
+    private:
+        uint8_t chan = 0;
+        Stm32Common::StringBuffer<LIBSMART_ITM_LOGGER_BUFFER_SIZE> stringBuffer;
+    };
+}
+
+#endif //LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP

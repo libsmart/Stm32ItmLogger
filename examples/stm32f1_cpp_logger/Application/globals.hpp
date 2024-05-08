@@ -12,6 +12,7 @@
 #define EASY_SMART_STM32_skeleton_GLOBALS_HPP
 
 #include "globals.h"
+#include "Stm32ItmLogger.hpp"
 #include <cstdint>
 
 #ifdef __cplusplus
@@ -20,7 +21,7 @@ extern "C" {
 
 //    uint32_t micros();
     extern uint32_t dummyCpp;
-
+    extern Stm32ItmLogger::Stm32ItmLogger logger;
 
 #ifdef __cplusplus
 }
