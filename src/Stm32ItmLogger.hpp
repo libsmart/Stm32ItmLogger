@@ -10,15 +10,21 @@
 #include <main.h>
 #include "Print.hpp"
 #include "StringBuffer.hpp"
+#include "LoggerInterface.hpp"
 
 namespace Stm32ItmLogger {
-    class Stm32ItmLogger : public Stm32Common::Print {
+    class Stm32ItmLogger : public LoggerInterface {
     public:
         Stm32ItmLogger() = default;
 
+        explicit Stm32ItmLogger(Severity printSeverity) : LoggerInterface(printSeverity) {}
+
         explicit Stm32ItmLogger(uint8_t chan) : chan(chan) {}
 
+        Stm32ItmLogger(Severity printSeverity, uint8_t chan) : LoggerInterface(printSeverity), chan(chan) {}
+
         size_t write(uint8_t data) override {
+            if (!checkSeverity()) return 1;
             ITM_SendChar(data);
             return 1;
         }
@@ -28,6 +34,9 @@ namespace Stm32ItmLogger {
         }
 
         void flush() override {
+            while (!stringBuffer.isEmpty()) {
+                write(stringBuffer.read());
+            }
         }
 
 
@@ -63,7 +72,7 @@ namespace Stm32ItmLogger {
             auto added = stringBuffer.add(size);
             int ch;
             while ((ch = stringBuffer.read()) >= 0) {
-                write((uint8_t)ch);
+                write((uint8_t) ch);
             }
             return added;
         }

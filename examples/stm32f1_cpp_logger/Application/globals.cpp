@@ -21,3 +21,5 @@
 uint32_t dummyCpp;
 
 Stm32ItmLogger::Stm32ItmLogger logger;
+//Stm32ItmLogger::Stm32ItmLogger logger(Stm32ItmLogger::LoggerInterface::noSeverity);
+//Stm32ItmLogger::Stm32ItmLogger logger(Stm32ItmLogger::LoggerInterface::allSeverity);

@@ -33,6 +33,7 @@ void loop() {
     dummyCpp++;
     dummyCandCpp++;
 
+    //logger.setSeverity(Stm32ItmLogger::LoggerInterface::Severity::DEBUGGING);
     logger.print("counter = ");
     logger.println(dummyCpp);
 
