@@ -81,6 +81,11 @@ namespace Stm32ItmLogger {
         uint8_t chan = 0;
         Stm32Common::StringBuffer<LIBSMART_ITM_LOGGER_BUFFER_SIZE> stringBuffer;
     };
+
+    /**
+     * Globally defined logger instance.
+     */
+    inline Stm32ItmLogger logger;
 }
 
 #endif //LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP

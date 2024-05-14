@@ -31,6 +31,9 @@ namespace Stm32ItmLogger {
         }
     };
 
+    /**
+     * Globally defined NULL-logger instance.
+     */
     inline EmptyLogger emptyLogger;
 }
 
