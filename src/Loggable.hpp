@@ -12,18 +12,20 @@
 namespace Stm32ItmLogger {
     class Loggable {
     public:
-        Loggable(): loggerInstance(&emptyLogger) {
-        }
+        virtual ~Loggable() { ; }
+
+        Loggable() : loggerInstance(&emptyLogger) { ; }
 
         explicit Loggable(LoggerInterface *logger)
-            : loggerInstance(logger) {
-        }
+                : loggerInstance(logger) { ; }
 
-        void setLogger(LoggerInterface *logger) { loggerInstance = logger; }
-        [[nodiscard]] LoggerInterface *getLogger() const { return loggerInstance; }
-        [[nodiscard]] LoggerInterface *log() const { return loggerInstance; }
+        virtual void setLogger(LoggerInterface *logger) { loggerInstance = logger; }
 
-    private:
+        [[nodiscard]] virtual LoggerInterface *getLogger() const { return loggerInstance; }
+
+        [[nodiscard]] virtual LoggerInterface *log() const { return loggerInstance; }
+
+    protected:
         LoggerInterface *loggerInstance;
     };
 }
