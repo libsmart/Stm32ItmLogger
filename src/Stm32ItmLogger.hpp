@@ -82,6 +82,7 @@ namespace Stm32ItmLogger {
 
         LoggerInterface *setSeverity(Severity newSeverity) override {
             LoggerInterface::setSeverity(newSeverity);
+            if (!checkSeverity()) return this;
             if (newSeverity == previousSeverity) return this;
 
 #ifdef LIBSMART_LOGGER_ENABLE_ANSI_COLORS_OVER_ITM

@@ -80,6 +80,31 @@ namespace Stm32ItmLogger {
             return (static_cast<uint8_t>(currentSeverity) & static_cast<uint8_t>(printSeverity)) > 0;
         }
 
+
+        /**
+         * @brief Sets the print severity level for logging.
+         *
+         * This function updates the current print severity level with the provided value.
+         *
+         * @param newPrintSeverity The new print severity level to set.
+         */
+        virtual void setPrintSeverity(Severity newPrintSeverity) {
+            printSeverity = newPrintSeverity;
+        }
+
+
+        /**
+         * @brief Gets the current print severity level for logging.
+         *
+         * This function returns the current print severity level that is used for logging.
+         *
+         * @return The current print severity level for logging.
+         */
+        virtual Severity getPrintSeverity() {
+            return printSeverity;
+        }
+
+
         using Print::print;
         using Print::println;
         using Print::flush;
