@@ -12,17 +12,25 @@
 namespace Stm32ItmLogger {
     class StaticLoggable {
     public:
-        StaticLoggable() {
-            loggerInstance = &emptyLogger;
-        }
+        ~StaticLoggable() = default;
+
+        StaticLoggable() = default;
 
         explicit StaticLoggable(LoggerInterface *logger) {
             loggerInstance = logger;
         }
 
         static void setLogger(LoggerInterface *logger) { loggerInstance = logger; }
+
         [[nodiscard]] static LoggerInterface *getLogger() { return loggerInstance; }
-        [[nodiscard]] static LoggerInterface *log() { return loggerInstance; }
+
+        [[nodiscard]] static LoggerInterface *log() {
+            return loggerInstance->setSeverity(Stm32ItmLogger::defaultSeverity);
+        }
+
+        [[nodiscard]] static LoggerInterface *log(Stm32ItmLogger::Severity severity) {
+            return loggerInstance->setSeverity(severity);
+        }
 
     private:
         static LoggerInterface *loggerInstance;

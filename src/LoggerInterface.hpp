@@ -26,22 +26,34 @@ namespace Stm32ItmLogger {
             WARNING = 16,
             /** normal but significant condition */
             NOTICE = 32,
-            /** informational messages */
+            /** Informational messages */
             INFORMATIONAL = 64,
             /** debug messages */
             DEBUGGING = 128,
         };
-        static constexpr Severity defaultSeverity = (Severity) (
-                static_cast<uint8_t>(Severity::NOTICE) | static_cast<uint8_t>(Severity::WARNING) |
-                static_cast<uint8_t>(Severity::ERROR) | static_cast<uint8_t>(Severity::CRITICAL) |
-                static_cast<uint8_t>(Severity::ALERT) | static_cast<uint8_t>(Severity::EMERGENCY));
 
-        static constexpr Severity allSeverity = (Severity) 255;
-        static constexpr Severity noSeverity = (Severity) 0;
+        static constexpr Severity debugPrintSeverity = (Severity) (
+            static_cast<uint8_t>(Severity::DEBUGGING) | static_cast<uint8_t>(Severity::INFORMATIONAL) |
+            static_cast<uint8_t>(Severity::NOTICE) | static_cast<uint8_t>(Severity::WARNING) |
+            static_cast<uint8_t>(Severity::ERROR) | static_cast<uint8_t>(Severity::CRITICAL) |
+            static_cast<uint8_t>(Severity::ALERT) | static_cast<uint8_t>(Severity::EMERGENCY));
+        static constexpr Severity noticePrintSeverity = (Severity) (
+            static_cast<uint8_t>(Severity::NOTICE) | static_cast<uint8_t>(Severity::WARNING) |
+            static_cast<uint8_t>(Severity::ERROR) | static_cast<uint8_t>(Severity::CRITICAL) |
+            static_cast<uint8_t>(Severity::ALERT) | static_cast<uint8_t>(Severity::EMERGENCY));
+        static constexpr Severity allPrintSeverity = (Severity) 255;
+        static constexpr Severity noPrintSeverity = (Severity) 0;
+
+        static constexpr Severity defaultPrintSeverity = LIBSMART_LOGGER_DEFAULT_PRINT_SEVERITY;
+
+        static constexpr Severity defaultSeverity = LIBSMART_LOGGER_DEFAULT_SEVERITY;
+
 
         LoggerInterface() = default;
 
-        explicit LoggerInterface(Severity printSeverity) : printSeverity(printSeverity) {}
+        explicit LoggerInterface(Severity printSeverity) : printSeverity(printSeverity) {
+        }
+
 
         /**
          * @brief Sets the severity level for logging.
@@ -50,7 +62,10 @@ namespace Stm32ItmLogger {
          *
          * @param newSeverity The new severity level to set.
          */
-        virtual void setSeverity(Severity newSeverity) { currentSeverity = newSeverity; }
+        virtual LoggerInterface *setSeverity(Severity newSeverity) {
+            currentSeverity = newSeverity;
+            return this;
+        }
 
         /**
          * @brief Check if the current severity level allows logging based on the print severity level.
@@ -70,8 +85,8 @@ namespace Stm32ItmLogger {
         using Print::flush;
 
     private:
-        Severity currentSeverity = Severity::NOTICE;
-        Severity printSeverity = (Severity) defaultSeverity;
+        Severity currentSeverity = defaultSeverity;
+        Severity printSeverity = (Severity) defaultPrintSeverity;
     };
 }
 
