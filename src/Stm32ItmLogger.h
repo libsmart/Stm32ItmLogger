@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <stdint-gcc.h>
 #include <malloc.h>
+#include "Stm32ItmLoggerCPPWrapper.hpp"
 
 #ifdef __cplusplus
 extern "C" {
