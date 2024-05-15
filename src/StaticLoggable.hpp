@@ -12,8 +12,6 @@
 namespace Stm32ItmLogger {
     class StaticLoggable {
     public:
-        ~StaticLoggable() = default;
-
         StaticLoggable() = default;
 
         explicit StaticLoggable(LoggerInterface *logger) {

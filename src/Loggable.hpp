@@ -12,22 +12,20 @@
 namespace Stm32ItmLogger {
     class Loggable {
     public:
-        virtual ~Loggable() { ; }
-
         Loggable() = default;
 
         explicit Loggable(LoggerInterface *logger)
             : loggerInstance(logger) { ; }
 
-        virtual void setLogger(LoggerInterface *logger) { loggerInstance = logger; }
+        void setLogger(LoggerInterface *logger) { loggerInstance = logger; }
 
-        [[nodiscard]] virtual LoggerInterface *getLogger() const { return loggerInstance; }
+        [[nodiscard]] LoggerInterface *getLogger() const { return loggerInstance; }
 
-        [[nodiscard]] virtual LoggerInterface *log() {
+        [[nodiscard]] LoggerInterface *log() const {
             return loggerInstance->setSeverity(Stm32ItmLogger::defaultSeverity);
         }
 
-        [[nodiscard]] virtual LoggerInterface *log(Stm32ItmLogger::Severity severity) {
+        [[nodiscard]] LoggerInterface *log(Stm32ItmLogger::Severity severity) const {
             return loggerInstance->setSeverity(severity);
         }
 
