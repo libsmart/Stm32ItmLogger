@@ -8,12 +8,12 @@
 
 
 size_t Logger_print(const char *prnt_cstring) {
-    return Stm32ItmLogger::logger.print(prnt_cstring);
+    return Stm32ItmLogger::logger.setSeverity(Stm32ItmLogger::LoggerInterface::defaultSeverity)->print(prnt_cstring);
 }
 
 
 size_t Logger_println(const char *prnt_cstring) {
-    return Stm32ItmLogger::logger.println(prnt_cstring);
+    return Stm32ItmLogger::logger.setSeverity(Stm32ItmLogger::LoggerInterface::defaultSeverity)->println(prnt_cstring);
 }
 
 
@@ -28,7 +28,7 @@ size_t Logger_printf(const char *format, ...) {
 
 #ifdef LIBSMART_ENABLE_DIRECT_BUFFER_WRITE
 size_t Logger_vprintf(const char *format, va_list args) {
-    return Stm32ItmLogger::logger.vprintf(format, args);
+    return Stm32ItmLogger::logger.setSeverity(Stm32ItmLogger::LoggerInterface::defaultSeverity)->vprintf(format, args);
 }
 #endif
 #endif
