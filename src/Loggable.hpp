@@ -22,15 +22,17 @@ namespace Stm32ItmLogger {
         [[nodiscard]] LoggerInterface *getLogger() const { return loggerInstance; }
 
         [[nodiscard]] LoggerInterface *log() const {
-            return loggerInstance->setSeverity(Stm32ItmLogger::defaultSeverity);
+            return loggerInstance == nullptr
+                       ? &emptyLogger
+                       : loggerInstance->setSeverity(Stm32ItmLogger::defaultSeverity);
         }
 
-        [[nodiscard]] LoggerInterface *log(Stm32ItmLogger::Severity severity) const {
-            return loggerInstance->setSeverity(severity);
+        [[nodiscard]] LoggerInterface *log(const Stm32ItmLogger::Severity severity) const {
+            return loggerInstance == nullptr ? &emptyLogger : loggerInstance->setSeverity(severity);
         }
 
     private:
-        LoggerInterface *loggerInstance = &emptyLogger;
+        LoggerInterface *loggerInstance = {};
     };
 }
 
