@@ -40,7 +40,12 @@ void Debugger_log(Debugger *debugger, const char *format, ...) {
 
 
 void SWO_PrintChar(char c, uint8_t chan) {
+#ifdef LIBSMART_ITM_LOGGER_OVER_ITM
     ITM_SendChar(c);
+#endif
+#ifdef LIBSMART_ITM_LOGGER_OVER_UART
+    HAL_UART_Transmit(&LIBSMART_ITM_LOGGER_OVER_UART, (const uint8_t *)&c, 1, 10);
+#endif
 }
 
 

@@ -27,3 +27,19 @@
  * Size of the buffer for printf string preparation.
  */
 #define LIBSMART_ITM_LOGGER_BUFFER_SIZE 128
+
+
+/**
+ * Log over ITM, if defined
+ */
+#undef LIBSMART_ITM_LOGGER_OVER_ITM
+#define LIBSMART_ITM_LOGGER_OVER_ITM
+
+
+/**
+ * Log over serial, if defined
+ */
+#undef LIBSMART_ITM_LOGGER_OVER_UART
+// #define LIBSMART_ITM_LOGGER_OVER_UART huart4
+
+

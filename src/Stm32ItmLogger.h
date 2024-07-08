@@ -7,6 +7,9 @@
 #define LIBSMART_STM32ITMLOGGER_LOGGER_H
 
 #include <libsmart_config.hpp>
+#ifdef LIBSMART_ITM_LOGGER_OVER_UART
+#include <usart.h>
+#endif
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint-gcc.h>

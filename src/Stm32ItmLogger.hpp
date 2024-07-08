@@ -8,9 +8,13 @@
 
 #include <libsmart_config.hpp>
 #include <main.h>
+#ifdef LIBSMART_ITM_LOGGER_OVER_UART
+#include <usart.h>
+#endif
 #include "Print.hpp"
 #include "StringBuffer.hpp"
 #include "LoggerInterface.hpp"
+#include "usart.h"
 
 namespace Stm32ItmLogger {
     class Stm32ItmLogger : public LoggerInterface {
@@ -28,7 +32,12 @@ namespace Stm32ItmLogger {
 
         size_t write(uint8_t data) override {
             if (!checkSeverity()) return 1;
+#ifdef LIBSMART_ITM_LOGGER_OVER_ITM
             ITM_SendChar(data);
+#endif
+#ifdef LIBSMART_ITM_LOGGER_OVER_UART
+            HAL_UART_Transmit(&LIBSMART_ITM_LOGGER_OVER_UART, &data, 1, 10);
+#endif
             return 1;
         }
 
