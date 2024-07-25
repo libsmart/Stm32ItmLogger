@@ -3,6 +3,11 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
+#ifndef LIBSMART_STM32ITMLOGGER_LIBSMART_CONFIG_DIST_HPP
+#define LIBSMART_STM32ITMLOGGER_LIBSMART_CONFIG_DIST_HPP
+
+#define LIBSMART_STM32ITMLOGGER
+
 
 /**
  * Messages are logged in this severity, if no severity is specified
@@ -42,4 +47,4 @@
 #undef LIBSMART_ITM_LOGGER_OVER_UART
 // #define LIBSMART_ITM_LOGGER_OVER_UART huart4
 
-
+#endif
