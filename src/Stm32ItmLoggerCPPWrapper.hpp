@@ -13,6 +13,7 @@
 extern "C" {
 #endif
 
+size_t Logger_write(const char prnt_char);
 size_t Logger_print(const char *prnt_cstring);
 size_t Logger_println(const char *prnt_cstring);
 

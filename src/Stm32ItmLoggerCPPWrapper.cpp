@@ -6,6 +6,10 @@
 #include "Stm32ItmLoggerCPPWrapper.hpp"
 #include "Stm32ItmLogger.hpp"
 
+size_t Logger_write(const char prnt_char) {
+    return Stm32ItmLogger::logger.setSeverity(Stm32ItmLogger::LoggerInterface::defaultSeverity)->print(prnt_char);
+}
+
 
 size_t Logger_print(const char *prnt_cstring) {
     return Stm32ItmLogger::logger.setSeverity(Stm32ItmLogger::LoggerInterface::defaultSeverity)->print(prnt_cstring);
