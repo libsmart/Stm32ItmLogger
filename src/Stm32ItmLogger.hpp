@@ -41,6 +41,8 @@ namespace Stm32ItmLogger {
             return 1;
         }
 
+        using LoggerInterface::write;
+
         int availableForWrite() override {
             return 0;
         }
