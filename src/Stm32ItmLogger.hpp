@@ -14,7 +14,6 @@
 #include "Print.hpp"
 #include "StringBuffer.hpp"
 #include "LoggerInterface.hpp"
-#include "usart.h"
 
 namespace Stm32ItmLogger {
     class Stm32ItmLogger : public LoggerInterface {
@@ -53,7 +52,7 @@ namespace Stm32ItmLogger {
             }
         }
 
-
+#ifdef LIBSMART_ENABLE_DIRECT_BUFFER_WRITE
         /**
          * @brief Retrieves the write buffer and the remaining space in the buffer.
          *
@@ -90,6 +89,7 @@ namespace Stm32ItmLogger {
             }
             return added;
         }
+#endif
 
         LoggerInterface *setSeverity(Severity newSeverity) override {
             LoggerInterface::setSeverity(newSeverity);
