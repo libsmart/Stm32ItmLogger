@@ -30,9 +30,7 @@ size_t Logger_printf(const char *format, ...) {
     return ret;
 }
 
-#ifdef LIBSMART_ENABLE_DIRECT_BUFFER_WRITE
 size_t Logger_vprintf(const char *format, va_list args) {
     return Stm32ItmLogger::logger.setSeverity(Stm32ItmLogger::LoggerInterface::defaultSeverity)->vprintf(format, args);
 }
-#endif
 #endif

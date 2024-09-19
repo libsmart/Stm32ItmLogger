@@ -32,7 +32,6 @@ size_t Logger_println(const char *prnt_cstring);
  */
 size_t Logger_printf(const char *format, ...);
 
-#ifdef LIBSMART_ENABLE_DIRECT_BUFFER_WRITE
 /**
  * @brief Writes formatted output to the underlying device using a variable argument list.
  *
@@ -46,7 +45,6 @@ size_t Logger_printf(const char *format, ...);
  * @note This function is an extension to the class Print in arduino.
  */
 size_t Logger_vprintf(const char *format, va_list args);
-#endif
 #endif
 
 
