@@ -1,6 +1,13 @@
+
 cmake_minimum_required(VERSION 3.27)
-project(Stm32ItmLogger C)
+project(Stm32ItmLogger)
 
-set(CMAKE_C_STANDARD 11)
+file(GLOB_RECURSE SOURCES
+        "src/*.*"
+)
 
-add_library(Stm32ItmLogger STATIC src/Stm32ItmLogger.c)
+add_library(Stm32ItmLogger STATIC ${SOURCES})
+
+target_include_directories(Stm32ItmLogger PUBLIC
+        src
+)
