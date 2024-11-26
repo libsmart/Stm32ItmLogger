@@ -123,11 +123,11 @@ namespace Stm32ItmLogger {
                     break;
 
                 case Severity::INFORMATIONAL:
-                    print("\x1b[0m");
+                    print("\x1b[0m"); // Default
                     break;
 
                 case Severity::DEBUGGING:
-                    print("\x1b[0;90m");
+                    print("\x1b[0;94m"); // Blue
                     break;
             }
 #endif
