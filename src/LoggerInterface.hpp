@@ -46,6 +46,11 @@ namespace Stm32ItmLogger {
                 static_cast<uint8_t>(Severity::NOTICE) | static_cast<uint8_t>(Severity::WARNING) |
                 static_cast<uint8_t>(Severity::ERROR) | static_cast<uint8_t>(Severity::CRITICAL) |
                 static_cast<uint8_t>(Severity::ALERT) | static_cast<uint8_t>(Severity::EMERGENCY));
+        static constexpr Severity warningPrintSeverity = (Severity) (
+        static_cast<uint8_t>(Severity::WARNING) |
+        static_cast<uint8_t>(Severity::ERROR) | static_cast<uint8_t>(Severity::CRITICAL) |
+        static_cast<uint8_t>(Severity::ALERT) | static_cast<uint8_t>(Severity::EMERGENCY));
+
         static constexpr Severity allPrintSeverity = (Severity) 255;
         static constexpr Severity noPrintSeverity = (Severity) 0;
 
