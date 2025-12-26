@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2024 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
+ * SPDX-FileCopyrightText: 2025 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
@@ -14,10 +14,13 @@ namespace Stm32ItmLogger {
     public:
         Loggable() = default;
 
-        explicit Loggable(LoggerInterface *logger)
-            : loggerInstance(logger) { ; }
+        explicit Loggable(LoggerInterface *logger_ptr) : loggerInstance(logger_ptr) { ; }
 
-        void setLogger(LoggerInterface *logger) { loggerInstance = logger; }
+        explicit Loggable(LoggerInterface &logger_ref) : loggerInstance(&logger_ref) { ; }
+
+        void setLogger(LoggerInterface *logger_ptr) { loggerInstance = logger_ptr; }
+
+        void setLogger(LoggerInterface &logger_ref) { loggerInstance = &logger_ref; }
 
         [[nodiscard]] LoggerInterface *getLogger() const { return loggerInstance; }
 
