@@ -1,33 +1,34 @@
 /*
- * SPDX-FileCopyrightText: 2024 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
+ * SPDX-FileCopyrightText: 2026 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP
-#define LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP
+#pragma once
 
 #include <libsmart_config.hpp>
 #include <main.h>
-#ifdef LIBSMART_ITM_LOGGER_OVER_UART
-#include <usart.h>
-#endif
+#include "EmptyLogger.hpp"
 #include "Print.hpp"
 #include "StringBuffer.hpp"
 #include "LoggerInterface.hpp"
+
+extern "C" {
+#ifdef LIBSMART_ITM_LOGGER_OVER_UART
+#include "usart.h"
+#endif
+}
+
 
 namespace Stm32ItmLogger {
     class Stm32ItmLogger : public LoggerInterface {
     public:
         Stm32ItmLogger() = default;
 
-        explicit Stm32ItmLogger(Severity printSeverity) : LoggerInterface(printSeverity) {
-        }
+        explicit Stm32ItmLogger(Severity printSeverity) : LoggerInterface(printSeverity) { ; }
 
-        explicit Stm32ItmLogger(uint8_t chan) : chan(chan) {
-        }
+        explicit Stm32ItmLogger(uint8_t chan) : chan(chan) { ; }
 
-        Stm32ItmLogger(Severity printSeverity, uint8_t chan) : LoggerInterface(printSeverity), chan(chan) {
-        }
+        Stm32ItmLogger(Severity printSeverity, uint8_t chan) : LoggerInterface(printSeverity), chan(chan) { ; }
 
         size_t write(uint8_t data) override {
             if (!checkSeverity()) return 1;
@@ -75,25 +76,18 @@ namespace Stm32ItmLogger {
          *
          * This function sets the number of bytes written to the logger.
          * It updates the internal stringBuffer by adding the given size.
-         * If there are any remaining bytes in the stringBuffer, it writes
-         * them to the logger using the write() function.
          *
          * @param size The number of bytes to set as written.
          * @return The number of bytes added to the stringBuffer.
          */
         size_t setWrittenBytes(size_t size) override {
-            auto added = stringBuffer.add(size);
-            int ch;
-            while ((ch = stringBuffer.read()) >= 0) {
-                write((uint8_t) ch);
-            }
-            return added;
+            return stringBuffer.add(size);
         }
 #endif
 
         LoggerInterface *setSeverity(Severity newSeverity) override {
             LoggerInterface::setSeverity(newSeverity);
-            if (!checkSeverity()) return this;
+            if (!checkSeverity()) return &emptyLogger;
             if (newSeverity == previousSeverity) return this;
 
 #ifdef LIBSMART_LOGGER_ENABLE_ANSI_COLORS_OVER_ITM
@@ -147,5 +141,3 @@ namespace Stm32ItmLogger {
      */
     inline Stm32ItmLogger logger;
 }
-
-#endif //LIBSMART_STM32ITMLOGGER_STM32ITMLOGGER_HPP

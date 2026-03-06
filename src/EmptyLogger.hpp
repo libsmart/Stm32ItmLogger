@@ -1,10 +1,10 @@
 /*
- * SPDX-FileCopyrightText: 2024 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
+ * SPDX-FileCopyrightText: 2026 Roland Rusch, easy-smart solution GmbH <roland.rusch@easy-smart.ch>
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef LIBSMART_STM32ITMLOGGER_EMPTYLOGGER_HPP
-#define LIBSMART_STM32ITMLOGGER_EMPTYLOGGER_HPP
+#pragma once
+
 #include "LoggerInterface.hpp"
 
 namespace Stm32ItmLogger {
@@ -38,6 +38,3 @@ namespace Stm32ItmLogger {
      */
     inline EmptyLogger emptyLogger;
 }
-
-
-#endif //LIBSMART_STM32ITMLOGGER_EMPTYLOGGER_HPP
